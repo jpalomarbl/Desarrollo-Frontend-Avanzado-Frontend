@@ -61,7 +61,6 @@ export class RegisterComponent implements OnInit {
     birth_date: this.birth_date,
     email: this.email,
     password: this.password
-
   });
 
   isValidForm: boolean | null = null;

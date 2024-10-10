@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     // TODO 20
+    // Everything initialized in attribute declaration section
   }
 
   ngOnInit(): void {}
