@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HeaderMenusService } from 'src/app/Services/header-menus.service';
 import { SharedService } from 'src/app/Services/shared.service';
@@ -7,7 +6,10 @@ import { UserService } from 'src/app/Services/user.service';
 
 import { UserDTO } from 'src/app/Models/user.dto';
 
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HeaderMenus } from 'src/app/Models/header-menus.dto';
+import { formatDate } from '@angular/common';
+
 
 @Component({
   selector: 'app-register',
@@ -77,7 +79,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   async register(): Promise<void> {
-    /*
     let responseOK: boolean = false;
     this.isValidForm = false;
     let errorResponse: any;
@@ -118,7 +119,5 @@ export class RegisterComponent implements OnInit {
       this.birth_date.setValue(formatDate(new Date(), 'yyyy-MM-dd', 'en'));
       this.router.navigateByUrl('home');
     }
-  }
-  */
   }
 }
