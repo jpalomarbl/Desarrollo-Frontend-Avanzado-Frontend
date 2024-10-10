@@ -63,7 +63,7 @@
 
     <div>
       <label for="password">Password</label>
-      <input type="text" name="password" [formControl]="password">
+      <input type="password" name="password" [formControl]="password">
 
       <div class="errors" *ngIf="(isValidForm === false) && password.errors && password.touched">
         <span *ngIf="password.errors?.['required']">Password is required!</span>

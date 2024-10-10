@@ -6,19 +6,32 @@ import { HeaderMenusService } from 'src/app/Services/header-menus.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
+import { AuthDTO } from 'src/app/Models/auth.dto';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HeaderMenus } from 'src/app/Models/header-menus.dto';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  /*
   // TODO 19
-  loginUser: AuthDTO;
-  email: FormControl;
-  password: FormControl;
-  loginForm: FormGroup;
-  */
+  loginUser: AuthDTO = new AuthDTO('', '', '', '');
+  email: FormControl = new FormControl(this.loginUser.email, [
+    Validators.required,
+    Validators.email
+  ]);
+  password: FormControl = new FormControl(this.loginUser.password, [
+    Validators.required,
+    Validators.minLength(8),
+    Validators.maxLength(16)
+  ]);
+  loginForm: FormGroup = new FormGroup({
+    email: this.email,
+    password: this.password
+  });
+
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -34,7 +47,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async login(): Promise<void> {
-    /*
     let responseOK: boolean = false;
     let errorResponse: any;
 
@@ -75,6 +87,5 @@ export class LoginComponent implements OnInit {
       this.headerMenusService.headerManagement.next(headerInfo);
       this.router.navigateByUrl('home');
     }
-    */
   }
 }
