@@ -4,27 +4,63 @@ import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { SharedService } from 'src/app/Services/shared.service';
 import { UserService } from 'src/app/Services/user.service';
 
+import { UserDTO } from 'src/app/Models/user.dto';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  /*
+
   // TODO 4
-  profileUser: UserDTO;
+  profileUser: UserDTO = new UserDTO( '', '', '', '', new Date(), '', '');
 
-  name: FormControl;
-  surname_1: FormControl;
-  surname_2: FormControl;
-  alias: FormControl;
-  birth_date: FormControl;
-  email: FormControl;
-  password: FormControl;
+  name: FormControl = new FormControl(this.profileUser.name, [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(25)
+  ]);
+  surname_1: FormControl = new FormControl(this.profileUser.surname_1, [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(25)
+  ]);
+  surname_2: FormControl = new FormControl(this.profileUser.surname_2, [
+    Validators.minLength(5),
+    Validators.maxLength(25)
+  ]);
+  alias: FormControl = new FormControl(this.profileUser.alias, [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(25)
+  ]);
+  birth_date: FormControl = new FormControl(this.profileUser.birth_date, [
+    Validators.required
+  ]);     // TODO PIPE IN INPUT HTML
+  email: FormControl = new FormControl(this.profileUser.email, [
+    Validators.required,
+    Validators.email
+  ]);
+  password: FormControl = new FormControl(this.profileUser.surname_1, [
+    Validators.required,
+    Validators.minLength(8),
+    Validators.maxLength(16)
+  ]);
 
-  profileForm: FormGroup;
-  isValidForm: boolean | null;
-  */
+  profileForm: FormGroup = new FormGroup({
+    name: this.name,
+    surname_1: this.surname_1,
+    surname_2: this.surname_2,
+    alias: this.alias,
+    birth_date: this.birth_date,
+    email: this.email,
+    password: this.password
+  });
+
+  isValidForm: boolean | null = null;
+
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -33,6 +69,7 @@ export class ProfileComponent implements OnInit {
     private localStorageService: LocalStorageService
   ) {
     // TODO 5
+    // Everything initialized in attribute declaration section
   }
 
   async ngOnInit(): Promise<void> {
@@ -72,7 +109,6 @@ export class ProfileComponent implements OnInit {
   }
 
   async updateUser(): Promise<void> {
-    /*
     let responseOK: boolean = false;
     this.isValidForm = false;
     let errorResponse: any;
@@ -103,6 +139,5 @@ export class ProfileComponent implements OnInit {
       responseOK,
       errorResponse
     );
-    */
   }
 }

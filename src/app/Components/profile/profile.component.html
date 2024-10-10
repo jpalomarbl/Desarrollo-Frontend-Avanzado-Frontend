@@ -5,4 +5,72 @@
   <h1>Profile</h1>
 
   <!-- TODO 6 -->
+
+  <form [formGroup]="profileForm" (ngSubmit)="updateUser()">
+    <div>
+      <label for="name">Name: </label>
+      <input type="text" name="name" [formControl]="name">
+
+      <div class="errors" *ngIf="(isValidForm === false) && name.errors && name.touched">
+        <span *ngIf="name.errors?.['required']">Name is required!</span>
+        <span *ngIf="name.errors?.['minlength'] || name.errors?.['maxlength']">Name must be 5 - 25 characters long!</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="surname_1">First surname: </label>
+      <input type="text" name="surname_1" [formControl]="surname_1">
+
+      <div class="errors" *ngIf="(isValidForm === false) && surname_1.errors && surname_1.touched">
+        <span *ngIf="surname_1.errors?.['required']">Surname is required!</span>
+        <span *ngIf="surname_1.errors?.['minlength'] || surname_1.errors?.['maxlength']">Surname must be 5 - 25 characters long!</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="surname_2">Second surname: </label>
+      <input type="text" name="surname_2" [formControl]="surname_2">
+
+      <div class="errors" *ngIf="(isValidForm === false) && surname_2.errors && surname_2.touched">
+        <span *ngIf="surname_2.errors?.['minlength'] || surname_2.errors?.['maxlength']">Surname must be 5 - 25 characters long!</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="alias">Alias: </label>
+      <input type="text" name="alias" [formControl]="alias">
+
+      <div class="errors" *ngIf="(isValidForm === false) && alias.errors && alias.touched">
+        <span *ngIf="alias.errors?.['required']">Alias is required!</span>
+        <span *ngIf="alias.errors?.['minlength'] || alias.errors?.['maxlength']">Alias must be 5 - 25 characters long!</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="birth_date">Birth date: </label>
+      <input type="date" name="birth_date" [formControl]="birth_date">
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input type="text" name="email" [formControl]="email">
+
+      <div class="errors" *ngIf="(isValidForm === false) && email.errors && email.touched">
+        <span *ngIf="email.errors?.['required']">Email is required!</span>
+        <span *ngIf="email.errors?.['email']">Email isn't valid!</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" [formControl]="password">
+
+      <div class="errors" *ngIf="(isValidForm === false) && password.errors && password.touched">
+        <span *ngIf="password.errors?.['required']">Password is required!</span>
+        <span *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength']">Password must be 8 - 16 characters long!</span>
+      </div>
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
 </div>
