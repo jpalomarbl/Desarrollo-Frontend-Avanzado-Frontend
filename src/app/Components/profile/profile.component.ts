@@ -15,49 +15,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class ProfileComponent implements OnInit {
 
   // TODO 4
-  profileUser: UserDTO = new UserDTO( '', '', '', '', new Date(), '', '');
+  profileUser: UserDTO;
 
-  name: FormControl = new FormControl(this.profileUser.name, [
-    Validators.required,
-    Validators.minLength(5),
-    Validators.maxLength(25)
-  ]);
-  surname_1: FormControl = new FormControl(this.profileUser.surname_1, [
-    Validators.required,
-    Validators.minLength(5),
-    Validators.maxLength(25)
-  ]);
-  surname_2: FormControl = new FormControl(this.profileUser.surname_2, [
-    Validators.minLength(5),
-    Validators.maxLength(25)
-  ]);
-  alias: FormControl = new FormControl(this.profileUser.alias, [
-    Validators.required,
-    Validators.minLength(5),
-    Validators.maxLength(25)
-  ]);
-  birth_date: FormControl = new FormControl(this.profileUser.birth_date, [
-    Validators.required
-  ]);     // TODO PIPE IN INPUT HTML
-  email: FormControl = new FormControl(this.profileUser.email, [
-    Validators.required,
-    Validators.email
-  ]);
-  password: FormControl = new FormControl(this.profileUser.surname_1, [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.maxLength(16)
-  ]);
+  name: FormControl;
+  surname_1: FormControl;
+  surname_2: FormControl;
+  alias: FormControl;
+  birth_date: FormControl;
+  email: FormControl;
+  password: FormControl;
 
-  profileForm: FormGroup = new FormGroup({
-    name: this.name,
-    surname_1: this.surname_1,
-    surname_2: this.surname_2,
-    alias: this.alias,
-    birth_date: this.birth_date,
-    email: this.email,
-    password: this.password
-  });
+  profileForm: FormGroup;
 
   isValidForm: boolean | null = null;
 
@@ -69,7 +37,49 @@ export class ProfileComponent implements OnInit {
     private localStorageService: LocalStorageService
   ) {
     // TODO 5
-    // Everything initialized in attribute declaration section
+    this.profileUser = new UserDTO( '', '', '', '', new Date(), '', '');
+
+    this.name = new FormControl(this.profileUser.name, [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(25)
+    ]);
+    this.surname_1 = new FormControl(this.profileUser.surname_1, [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(25)
+    ]);
+    this.surname_2 = new FormControl(this.profileUser.surname_2, [
+      Validators.minLength(5),
+      Validators.maxLength(25)
+    ]);
+    this.alias = new FormControl(this.profileUser.alias, [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(25)
+    ]);
+    this.birth_date = new FormControl(this.profileUser.birth_date, [
+      Validators.required
+    ]);
+    this.email = new FormControl(this.profileUser.email, [
+      Validators.required,
+      Validators.email
+    ]);
+    this.password = new FormControl(this.profileUser.surname_1, [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(16)
+    ]);
+
+    this.profileForm = this.formBuilder.group({
+      name: this.name,
+      surname_1: this.surname_1,
+      surname_2: this.surname_2,
+      alias: this.alias,
+      birth_date: this.birth_date,
+      email: this.email,
+      password: this.password
+    });
   }
 
   async ngOnInit(): Promise<void> {

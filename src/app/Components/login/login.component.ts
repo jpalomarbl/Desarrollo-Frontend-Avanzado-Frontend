@@ -17,21 +17,11 @@ import { HeaderMenus } from 'src/app/Models/header-menus.dto';
 })
 export class LoginComponent implements OnInit {
   // TODO 19
-  loginUser: AuthDTO = new AuthDTO('', '', '', '');
-  email: FormControl = new FormControl(this.loginUser.email, [
-    Validators.required,
-    Validators.email
-  ]);
-  password: FormControl = new FormControl(this.loginUser.password, [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.maxLength(16)
-  ]);
-  loginForm: FormGroup = new FormGroup({
-    email: this.email,
-    password: this.password
-  });
+  loginUser: AuthDTO;
 
+  email: FormControl;
+  password: FormControl;
+  loginForm: FormGroup;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -42,7 +32,21 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     // TODO 20
-    // Everything initialized in attribute declaration section
+    this.loginUser = new AuthDTO('', '', '', '');
+
+    this.email = new FormControl(this.loginUser.email, [
+      Validators.required,
+      Validators.email
+    ]);
+    this.password = new FormControl(this.loginUser.password, [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(16)
+    ]);
+    this.loginForm = this.formBuilder.group({
+      email: this.email,
+      password: this.password
+    });
   }
 
   ngOnInit(): void {}
