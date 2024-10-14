@@ -65,7 +65,7 @@ export class PostFormComponent implements OnInit {
       Validators.required,
     ]);
 
-    this.categories = new UntypedFormControl();
+    this.categories = new UntypedFormControl(this.post.categories);
 
     this.postForm = this.formBuilder.group({
       title: this.title,
@@ -88,13 +88,15 @@ export class PostFormComponent implements OnInit {
           this.postId
         );
 
+        //console.log(this.post);
+
         this.title.setValue(this.post.title);
 
         this.description.setValue(this.post.description);
 
         this.publication_date.setValue(formatDate(this.post.publication_date, 'yyyy-MM-dd', 'en'));
 
-        this.categories.setValue(this.post.categories);
+        this.categories.setValue(this.post.categories.map((category: CategoryDTO) => category.categoryId));
 
         this.postForm = this.formBuilder.group({
           title: this.title,
@@ -193,7 +195,13 @@ export class PostFormComponent implements OnInit {
     }
 
     this.isValidForm = true;
-    this.post = this.postForm.value;
+
+    this.post.title = this.postForm.value.title;
+    this.post.description = this.postForm.value.description;
+    this.post.publication_date = this.postForm.value.publication_date;
+    this.post.categories = this.postForm.value.categories;
+
+    console.log(this.postForm.value.categories);
 
     if (this.isUpdateMode) {
       this.validRequest = await this.editPost();

@@ -52,11 +52,12 @@
     </div>
 
     <div>
-      <label for="categories">Categories: </label>
-      <select multiple name="categories">
+      <label for="category">Categories: </label>
+      <select multiple name="category" [formControl]="categories">
         <option 
           *ngFor="let category of userCategories"
-          value="categories.value">
+          [value]="category.categoryId"
+        >
           {{ category.title }}
         </option>
       </select>
