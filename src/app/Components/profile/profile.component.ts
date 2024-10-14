@@ -6,6 +6,7 @@ import { UserService } from 'src/app/Services/user.service';
 
 import { UserDTO } from 'src/app/Models/user.dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -83,7 +84,6 @@ export class ProfileComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    /*
     let errorResponse: any;
 
     // load user data
@@ -115,7 +115,6 @@ export class ProfileComponent implements OnInit {
         this.sharedService.errorLog(errorResponse);
       }
     }
-    */
   }
 
   async updateUser(): Promise<void> {
