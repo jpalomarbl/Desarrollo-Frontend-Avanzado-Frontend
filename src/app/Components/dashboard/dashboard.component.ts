@@ -29,13 +29,14 @@ export class DashboardComponent {
     this.total_likes = 0;
     this.total_dislikes = 0;
 
-    this.posts = [];
+    this.posts = []; 
   }
 
-  async ngOnInit(): Promise<void> {
-    await this.loadPosts()
-    
-    this.calculate();
+  async ngOnInit(): Promise<void> {    
+    this.loadPosts()
+    .then(() => {
+      this.calculate();
+    });
   }
 
   private calculate(): void {
