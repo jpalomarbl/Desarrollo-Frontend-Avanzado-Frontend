@@ -1,9 +1,10 @@
 <!-- TODO 3 -->
 <div class="container">
     <div class="post" *ngFor="let post of posts">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.description }}</p>
-        <p>{{ post.publication_date | formatDate: 4 }}</p>
+        <h2>Title: {{ post.title }}</h2>
+        <p>Description: {{ post.description }}</p>
+        <p>Publication date: {{ post.publication_date | formatDate: 4 }}</p>
+        <p>Published by: {{ post.userAlias }}</p>
 
         <div class="categories">
             <span
