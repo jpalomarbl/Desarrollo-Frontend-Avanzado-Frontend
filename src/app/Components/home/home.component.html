@@ -3,7 +3,7 @@
     <div class="post" *ngFor="let post of posts">
         <h2>Title: {{ post.title }}</h2>
         <p>Description: {{ post.description }}</p>
-        <p>Publication date: {{ post.publication_date | formatDate: 4 }}</p>
+        <p>Publication date: {{ post.publication_date | formatDate: 3 }}</p>
         <p>Published by: {{ post.userAlias }}</p>
 
         <div class="categories">
