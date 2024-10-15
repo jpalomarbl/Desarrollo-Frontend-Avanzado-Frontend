@@ -7,6 +7,8 @@ import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { PostService } from 'src/app/Services/post.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
+import { FormatDatePipe } from 'src/app/Pipes/format-date.pipe';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -37,6 +39,20 @@ export class HomeComponent {
   }
   private async loadPosts(): Promise<void> {
     // TODO 2
+
+    let errorResponse: any;
+    const userId = this.localStorageService.get('user_id');
+
+    if (userId) {
+      this.showButtons = true;
+    }
+
+    try {
+      this.posts = await this.postService.getPosts();
+    } catch (error: any) {
+      errorResponse = error.error;
+      this.sharedService.errorLog(errorResponse);
+    }
   }
 
   async like(postId: string): Promise<void> {
