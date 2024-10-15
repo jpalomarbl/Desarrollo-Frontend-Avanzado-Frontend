@@ -37,11 +37,11 @@ export class FormatDatePipe implements PipeTransform {
 
     let formatedDate = value.getDate() + separator;
 
-    if (+value.getMonth() < 10) {
+    if ((+value.getMonth() + 1) < 10) {
       formatedDate += 0;
     }
 
-    formatedDate += value.getMonth() + separator + value.getFullYear();
+    formatedDate += (value.getMonth() + 1) + separator + value.getFullYear();
 
     return formatedDate;
   }
