@@ -5,6 +5,25 @@ div.container {
     align-items: center;
 }
 
+div.container > form {
+    display: flex;
+    align-items: center;
+}
+
+div.container > form > div {
+    margin: 0 0.5vw;
+}
+
+div.container > form > div.category {
+    display: flex;
+
+    align-items: center;
+}
+
+div.container > form > div > label {
+    margin: 0 10px;
+}
+
 div.container > div.post {
     display: flex;
     flex-direction: column;

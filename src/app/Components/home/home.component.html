@@ -1,27 +1,27 @@
 <!-- TODO 3 -->
 <div class="container">
     <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
-        <div>
+        <div class="title">
             <label for="title">Title: </label>
             <input type="text" name="title" [formControl]="titleFilter">
         </div>
 
-        <div>
+        <div class="description">
             <label for="description">Description: </label>
             <input type="text" name="description" [formControl]="descriptionFilter">
         </div>
 
-        <div>
+        <div class="publication_date">
             <label for="publication_date">Publication date: </label>
             <input type="date" name="publication_date" [formControl]="publicationDateFilter">
         </div>
 
-        <div>
+        <div class="alias">
             <label for="alias">Alias: </label>
             <input type="text" name="alias" [formControl]="aliasFilter">
         </div>
 
-        <div>
+        <div class="category">
             <label for="category">Categories: </label>
             <select multiple name="category" [formControl]="categoriesFilter">
               <option 
