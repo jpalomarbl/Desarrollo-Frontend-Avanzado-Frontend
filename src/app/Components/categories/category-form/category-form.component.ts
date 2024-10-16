@@ -11,6 +11,15 @@ import { CategoryService } from 'src/app/Services/category.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+interface CategoryFormTranslation {
+  title: string;
+  description: string;
+  cssColor: string;
+}
+
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
@@ -25,9 +34,12 @@ export class CategoryFormComponent implements OnInit {
   categoryForm: UntypedFormGroup;
   isValidForm: boolean | null;
 
+  translations: CategoryFormTranslation;
+
   private isUpdateMode: boolean;
   private validRequest: boolean;
   private categoryId: string | null;
+  private langSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,13 +47,26 @@ export class CategoryFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private sharedService: SharedService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private translate: TranslateService
   ) {
     this.isValidForm = null;
     this.categoryId = this.activatedRoute.snapshot.paramMap.get('id');
     this.category = new CategoryDTO('', '', '');
     this.isUpdateMode = false;
     this.validRequest = false;
+    
+    this.translations = {
+      title: '',
+      description: '',
+      cssColor: ''
+    };
+
+    this.attributeTranslateUpdate();
+
+    this.langSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.attributeTranslateUpdate();
+    });
 
     this.title = new UntypedFormControl(this.category.title, [
       Validators.required,
@@ -92,6 +117,20 @@ export class CategoryFormComponent implements OnInit {
         this.sharedService.errorLog(errorResponse);
       }
     }
+  }
+
+  private attributeTranslateUpdate(): void {
+    this.translate.get('CATS_ATTRIBUTES.title').subscribe((res: string) => {
+      this.translations.title = res;
+    });
+
+    this.translate.get('CATS_ATTRIBUTES.description').subscribe((res: string) => {
+      this.translations.description = res;
+    });
+
+    this.translate.get('CATS_ATTRIBUTES.cssColor').subscribe((res: string) => {
+      this.translations.cssColor = res;
+    });
   }
 
   private async editCategory(): Promise<boolean> {

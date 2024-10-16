@@ -8,6 +8,18 @@ import { UserDTO } from 'src/app/Models/user.dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+interface ProfileTranslation {
+  name: string;
+  surname1: string;
+  surname2: string;
+  alias: string;
+  email: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -30,15 +42,35 @@ export class ProfileComponent implements OnInit {
 
   isValidForm: boolean | null = null;
 
+  translations: ProfileTranslation;
+
+  private langSubscription: Subscription;
+
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private userService: UserService,
     private sharedService: SharedService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private translate: TranslateService
   ) {
     // TODO 5
     this.profileUser = new UserDTO( '', '', '', '', new Date(), '', '');
+
+    this.translations = {
+      name: '',
+      surname1: '',
+      surname2: '',
+      alias: '',
+      email: '',
+      password: ''
+    }
+
+    this.attributeTranslateUpdate();
+
+    this.langSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.attributeTranslateUpdate();
+    });
 
     this.name = new FormControl(this.profileUser.name, [
       Validators.required,
@@ -148,5 +180,31 @@ export class ProfileComponent implements OnInit {
       responseOK,
       errorResponse
     );
+  }
+
+  private attributeTranslateUpdate(): void {
+    this.translate.get('LOGIN_REGISTER_PROFILE.name').subscribe((res: string) => {
+      this.translations.name = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.surname1').subscribe((res: string) => {
+      this.translations.surname1 = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.surname2').subscribe((res: string) => {
+      this.translations.surname2 = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.alias').subscribe((res: string) => {
+      this.translations.alias = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.email').subscribe((res: string) => {
+      this.translations.email = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.password').subscribe((res: string) => {
+      this.translations.password = res;
+    });
   }
 }

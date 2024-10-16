@@ -15,6 +15,14 @@ import { PostDTO } from 'src/app/Models/post.dto';
 import { CategoryDTO } from 'src/app/Models/category.dto';
 import { formatDate } from '@angular/common';
 
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+interface PostFormTranslation {
+  title: string;
+  description: string;
+}
+
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
@@ -31,9 +39,12 @@ export class PostFormComponent implements OnInit {
   isValidForm: boolean | null;
   userCategories: CategoryDTO[];
 
+  translations: PostFormTranslation;
+
   private isUpdateMode: boolean;
   private validRequest: boolean;
   private postId: string | null;
+  private langSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,7 +53,8 @@ export class PostFormComponent implements OnInit {
     private router: Router,
     private sharedService: SharedService,
     private localStorageService: LocalStorageService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private translate: TranslateService
   ) {
     this.isValidForm = null;
     this.postId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -50,6 +62,17 @@ export class PostFormComponent implements OnInit {
     this.isUpdateMode = false;
     this.validRequest = false;
     this.userCategories = [];
+
+    this.translations = {
+      title: '',
+      description: ''
+    };
+
+    this.attributeTranslateUpdate();
+
+    this.langSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.attributeTranslateUpdate();
+    });
 
     this.title = new UntypedFormControl(this.post.title, [
       Validators.required,
@@ -111,7 +134,15 @@ export class PostFormComponent implements OnInit {
     }
   }
 
+  private attributeTranslateUpdate(): void {
+    this.translate.get('POST_ATTRIBUTES.title').subscribe((res: string) => {
+      this.translations.title = res;
+    });
 
+    this.translate.get('POST_ATTRIBUTES.description').subscribe((res: string) => {
+      this.translations.description = res;
+    });
+  }
   private async loadCategories(): Promise<void> {
     let errorResponse: any;
     const userId = this.localStorageService.get('user_id');

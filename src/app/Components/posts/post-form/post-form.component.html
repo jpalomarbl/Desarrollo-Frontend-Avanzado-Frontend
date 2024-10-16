@@ -4,14 +4,14 @@
 <div>
   <!-- TODO 14 -->
 
-  <h1>Post form</h1>
+  <h1>{{ "TITLES.postForm" | translate }}</h1>
   <form
     *ngIf="postForm"
     [formGroup]="postForm"
     (ngSubmit)="savePost()"
   >
     <div>
-      <label for="title">Title:</label>
+      <label for="title">{{ "POST_ATTRIBUTES.title" | translate }}:</label>
       <input type="text" [formControl]="title" />
 
       <div *ngIf="title.errors">
@@ -19,17 +19,19 @@
           *ngIf="title.errors && isValidForm != null && !isValidForm"
           [ngClass]="'error'"
         >
-          <div *ngIf="title.errors.required">Title is required</div>
+          <div *ngIf="title.errors.required">
+            {{ "FORM_ERRORS.required" | translate:{attribute: translations.title} }}
+          </div>
 
           <div *ngIf="title.errors.maxlength">
-            Title can be max 55 characters long.
+            {{ "FORM_ERRORS.maxChars" | translate:{attribute: translations.title, numChars: 55} }}
           </div>
         </div>
       </div>
     </div>
 
     <div>
-      <label for="description">Description:</label>
+      <label for="description">{{ "POST_ATTRIBUTES.description" | translate }}:</label>
       <input type="text" [formControl]="description" />
 
       <div *ngIf="description.errors">
@@ -37,22 +39,24 @@
           *ngIf="description.errors && isValidForm != null && !isValidForm"
           [ngClass]="'error'"
         >
-          <div *ngIf="description.errors.required">Description is required</div>
+          <div *ngIf="description.errors.required">
+            {{ "FORM_ERRORS.required" | translate:{attribute: translations.description} }}
+          </div>
 
           <div *ngIf="description.errors.maxlength">
-            Description can be max 255 characters long.
+            {{ "FORM_ERRORS.maxChars" | translate:{attribute: translations.description, numChars: 255} }}
           </div>
         </div>
       </div>
     </div>
 
     <div>
-      <label for="publication_date">Publication date:</label>
+      <label for="publication_date">{{ "POST_ATTRIBUTES.publication" | translate }}:</label>
       <input type="date" [formControl]="publication_date" />
     </div>
 
     <div>
-      <label for="category">Categories: </label>
+      <label for="category">{{ "POST_ATTRIBUTES.categories" | translate }}: </label>
       <select multiple name="category" [formControl]="categories">
         <option 
           *ngFor="let category of userCategories"
@@ -63,6 +67,6 @@
       </select>
     </div>
 
-    <button type="submit">SAVE</button>
+    <button type="submit">{{ "BUTTONS.save" | translate }}</button>
   </form>
 </div>

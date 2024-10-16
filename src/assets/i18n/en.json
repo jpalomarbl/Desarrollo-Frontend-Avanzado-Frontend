@@ -1,0 +1,79 @@
+{
+    "POST_ATTRIBUTES": {
+        "id": "ID",
+        "title": "Title",
+        "description": "Description",
+        "publication": "Publication date",
+        "alias": "Alias",
+        "published": "Published by",
+        "categories": "Categories",
+        "numLikes": "Num likes",
+        "numDislikes": "Num dislikes",
+        "actions": "Actions"
+    },
+
+    "CATS_ATTRIBUTES": {
+        "id": "ID",
+        "title": "Title",
+        "description": "Description",
+        "cssColor": "CSS color",
+        "actions": "Actions"
+    },
+
+    "BUTTONS": {
+        "filter": "Apply filters",
+        "like": "Like",
+        "dislike": "Dislike",
+        "addPost": "Add post",
+        "addCat": "Add category",
+        "update": "Update",
+        "delete": "Delete",
+        "save": "Save",
+        "login": "Log in",
+        "register": "Register"
+    },
+
+    "TITLES": {
+        "postList": "Post List",
+        "catList": "Category List",
+        "postForm": "Post Form",
+        "catForm": "Category Form",
+        "login": "Log in",
+        "register": "Register"
+    },
+
+    "FORM_ERRORS": {
+        "maxChars": "{{attribute}} can be max {{numChars}} characters long.",
+        "required": "{{attribute}} is required",
+        "notValid": "{{attribute}} is not valid",
+        "rangeChars": "{{attribute}} must be {{min}} - {{max}} chars long"
+
+    },
+
+    "HEADER": {
+        "home": "Home",
+        "login": "Log in",
+        "register": "Register",
+        "dashboard": "Dashboard",
+        "adminPosts": "Admin posts",
+        "adminCats": "Admin categories",
+        "profile": "Profile",
+        "logout": "Log out",
+        "language": "Español"
+    },
+
+    "DASHBOARD": {
+        "totalLikes": "Total likes",
+        "totalDislikes": "Total dislikes"
+    },
+
+    "LOGIN_REGISTER_PROFILE": {
+        "email": "Email",
+        "password": "Password",
+        "name": "Name",
+        "surname1": "First surname",
+        "surname2": "Second surname",
+        "alias": "Alias",
+        "birth_date": "Birth date"
+    }
+}

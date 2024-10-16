@@ -6,9 +6,17 @@ import { HeaderMenusService } from 'src/app/Services/header-menus.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
-import { AuthDTO } from 'src/app/Models/auth.dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthDTO } from 'src/app/Models/auth.dto';
 import { HeaderMenus } from 'src/app/Models/header-menus.dto';
+
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+interface LoginTranslation {
+  email: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -23,16 +31,32 @@ export class LoginComponent implements OnInit {
   password: FormControl;
   loginForm: FormGroup;
 
+  translations: LoginTranslation;
+
+  private langSubscription: Subscription;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private authService: AuthService,
     private sharedService: SharedService,
     private headerMenusService: HeaderMenusService,
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     // TODO 20
     this.loginUser = new AuthDTO('', '', '', '');
+
+    this.translations = {
+      email: '',
+      password: ''
+    };
+
+    this.attributeTranslateUpdate();
+
+    this.langSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.attributeTranslateUpdate();
+    });
 
     this.email = new FormControl(this.loginUser.email, [
       Validators.required,
@@ -92,5 +116,15 @@ export class LoginComponent implements OnInit {
       this.headerMenusService.headerManagement.next(headerInfo);
       this.router.navigateByUrl('home');
     }
+  }
+
+  private attributeTranslateUpdate(): void {
+    this.translate.get('LOGIN_REGISTER_PROFILE.email').subscribe((res: string) => {
+      this.translations.email = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.password').subscribe((res: string) => {
+      this.translations.password = res;
+    });
   }
 }

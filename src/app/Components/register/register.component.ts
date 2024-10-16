@@ -7,9 +7,20 @@ import { UserService } from 'src/app/Services/user.service';
 import { UserDTO } from 'src/app/Models/user.dto';
 
 import { formatDate } from '@angular/common';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HeaderMenus } from 'src/app/Models/header-menus.dto';
 
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+interface RegisterTranslation {
+  name: string;
+  surname1: string;
+  surname2: string;
+  alias: string;
+  email: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-register',
@@ -33,15 +44,35 @@ export class RegisterComponent implements OnInit {
 
   isValidForm: boolean | null = null;
 
+  translations: RegisterTranslation;
+
+  private langSubscription: Subscription;
+
   constructor(
     private userService: UserService,
     private sharedService: SharedService,
     private headerMenusService: HeaderMenusService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private translate: TranslateService
   ) {
     // TODO 17
     this.registerUser = new UserDTO( '', '', '', '', new Date(), '', '');
+
+    this.translations = {
+      name: '',
+      surname1: '',
+      surname2: '',
+      alias: '',
+      email: '',
+      password: ''
+    }
+
+    this.attributeTranslateUpdate();
+
+    this.langSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.attributeTranslateUpdate();
+    });
 
     this.name = new FormControl(this.registerUser.name, [
       Validators.required,
@@ -129,5 +160,31 @@ export class RegisterComponent implements OnInit {
       this.birth_date.setValue(formatDate(new Date(), 'yyyy-MM-dd', 'en'));
       this.router.navigateByUrl('home');
     }
+  }
+
+  private attributeTranslateUpdate(): void {
+    this.translate.get('LOGIN_REGISTER_PROFILE.name').subscribe((res: string) => {
+      this.translations.name = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.surname1').subscribe((res: string) => {
+      this.translations.surname1 = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.surname2').subscribe((res: string) => {
+      this.translations.surname2 = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.alias').subscribe((res: string) => {
+      this.translations.alias = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.email').subscribe((res: string) => {
+      this.translations.email = res;
+    });
+
+    this.translate.get('LOGIN_REGISTER_PROFILE.password').subscribe((res: string) => {
+      this.translations.password = res;
+    });
   }
 }

@@ -1,0 +1,70 @@
+{
+    "POST_ATTRIBUTES": {
+        "id": "ID",
+        "title": "Título",
+        "description": "Descripción",
+        "publication": "Fecha de publicación",
+        "alias": "Alias",
+        "published": "Publicado por",
+        "categories": "Categorías",
+        "numLikes": "Núm. de likes",
+        "numDislikes": "Núm. de dislikes",
+        "actions": "Acciones"
+    },
+    "CATS_ATTRIBUTES": {
+        "id": "ID",
+        "title": "Título",
+        "description": "Descripción",
+        "cssColor": "Color CSS",
+        "actions": "Acciones"
+    },
+    "BUTTONS": {
+        "filter": "Aplicar filtros",
+        "like": "Me gusta",
+        "dislike": "No me gusta",
+        "addPost": "Añadir publicación",
+        "update": "Actualizar",
+        "delete": "Eliminar",
+        "save": "Guardar",
+        "login": "Iniciar sesión",
+        "register": "Registrarse"
+    },
+    "TITLES": {
+        "postList": "Lista de publicaciones",
+        "catList": "Lista de categorías",
+        "postForm": "Formulario de publicación",
+        "catForm": "Formulario de categoría",
+        "login": "Inicio de sesión",
+        "register": "Registro"
+    },
+    "FORM_ERRORS": {
+        "maxChars": "{{attribute}} puede tener un máximo de {{numChars}} caracteres.",
+        "required": "{{attribute}} es obligatorio",
+        "notValid": "{{attribute}} no es válido",
+        "rangeChars": "{{attribute}} tiene que tener de {{min}} a {{max}} caracteres"
+    },
+    "HEADER": {
+        "home": "Inicio",
+        "login": "Iniciar sesión",
+        "register": "Registrarse",
+        "dashboard": "Panel de control",
+        "adminPosts": "Administrar publicaciones",
+        "adminCats": "Administrar categorías",
+        "profile": "Perfil",
+        "logout": "Cerrar sesión",
+        "language": "English"
+    },
+    "DASHBOARD": {
+        "totalLikes": "Total de Me Gustas",
+        "totalDislikes": "Total de No Me Gustas"
+    },
+    "LOGIN_REGISTER_PROFILE": {
+        "email": "Email",
+        "password": "Contraseña",
+        "name": "Nombre",
+        "surname1": "Primer apellido",
+        "surname2": "Segundo apellido",
+        "alias": "Alias",
+        "birth_date": "Fecha de nacimiento"
+    }
+}

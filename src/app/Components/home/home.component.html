@@ -2,27 +2,27 @@
 <div class="container">
     <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
         <div class="title">
-            <label for="title">Title: </label>
+            <label for="title">{{ "POST_ATTRIBUTES.title" | translate }}:</label>
             <input type="text" name="title" [formControl]="titleFilter">
         </div>
 
         <div class="description">
-            <label for="description">Description: </label>
+            <label for="description">{{ "POST_ATTRIBUTES.description" | translate }}: </label>
             <input type="text" name="description" [formControl]="descriptionFilter">
         </div>
 
         <div class="publication_date">
-            <label for="publication_date">Publication date: </label>
+            <label for="publication_date">{{ "POST_ATTRIBUTES.publication" | translate }}: </label>
             <input type="date" name="publication_date" [formControl]="publicationDateFilter">
         </div>
 
         <div class="alias">
-            <label for="alias">Alias: </label>
+            <label for="alias">{{ "POST_ATTRIBUTES.alias" | translate }}: </label>
             <input type="text" name="alias" [formControl]="aliasFilter">
         </div>
 
         <div class="category">
-            <label for="category">Categories: </label>
+            <label for="category">{{ "POST_ATTRIBUTES.categories" | translate }}: </label>
             <select multiple name="category" [formControl]="categoriesFilter">
               <option 
                 *ngFor="let category of allCategories"
@@ -33,14 +33,14 @@
             </select>
           </div>
 
-        <button type="submit">Apply filters</button>
+        <button type="submit">{{ "BUTTONS.filter" | translate }}</button>
     </form>
 
     <div class="post" *ngFor="let post of posts">
-        <h2>Title: {{ post.title }}</h2>
-        <p>Description: {{ post.description }}</p>
-        <p>Publication date: {{ post.publication_date | formatDate: 3 }}</p>
-        <p>Published by: {{ post.userAlias }}</p>
+        <h2>{{ "POST_ATTRIBUTES.title" | translate }}: {{ post.title }}</h2>
+        <p>{{ "POST_ATTRIBUTES.description" | translate }}: {{ post.description }}</p>
+        <p>{{ "POST_ATTRIBUTES.publication" | translate }}: {{ post.publication_date | formatDate: 3 }}</p>
+        <p>{{ "POST_ATTRIBUTES.published" | translate }}: {{ post.userAlias }}</p>
 
         <div class="categories">
             <span
@@ -53,12 +53,12 @@
 
         <div class="likes-dislikes" *ngIf="showButtons">
             <div class="likes" (click)="like(post.postId)">
-                <button>Like</button>
+                <button>{{ "BUTTONS.like" | translate }}</button>
                 <p>{{ post.num_likes }}</p>
             </div>
     
             <div class="dislikes" (click)="dislike(post.postId)">
-                <button>Dislike</button>
+                <button>{{ "BUTTONS.dislike" | translate }}</button>
                 <p>{{ post.num_dislikes }}</p>
             </div>
         </div>

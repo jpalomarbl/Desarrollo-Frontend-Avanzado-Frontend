@@ -8,6 +8,8 @@ import { PostService } from 'src/app/Services/post.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
 import { FormatDatePipe } from 'src/app/Pipes/format-date.pipe';
+import { TranslateService } from '@ngx-translate/core';
+
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CategoryDTO } from 'src/app/Models/category.dto';
 
@@ -34,7 +36,8 @@ export class HomeComponent {
     private sharedService: SharedService,
     private router: Router,
     private headerMenusService: HeaderMenusService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    // private translate: TranslateService
   ) {
     this.showButtons = false;
     this.allCategories = [];
@@ -52,6 +55,8 @@ export class HomeComponent {
       aliasfilter: this.aliasFilter,
       categoriesFilter: this.categoriesFilter
     });
+
+    // this.translate.setDefaultLang('en');
 
     this.loadPosts()
     .then(() => {
@@ -78,6 +83,10 @@ export class HomeComponent {
       }
     );
   }
+
+  // switchLanguage(language: string): void {
+  //   this.translate.use(language);
+  // }
   async like(postId: string): Promise<void> {
     let errorResponse: any;
     try {

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HeaderMenus } from 'src/app/Models/header-menus.dto';
 import { HeaderMenusService } from 'src/app/Services/header-menus.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private headerMenusService: HeaderMenusService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private translate: TranslateService
   ) {
     this.showAuthSection = false;
     this.showNoAuthSection = true;
@@ -31,6 +33,13 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
+  }
+
+  switchLanguage(): void {
+    if (this.translate.currentLang === 'en')
+      this.translate.use('es');
+    else if (this.translate.currentLang === 'es')
+      this.translate.use('en');
   }
 
   home(): void {
