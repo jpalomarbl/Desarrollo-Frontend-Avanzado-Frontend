@@ -26,7 +26,7 @@ export class FormatDatePipe implements PipeTransform {
       break;
 
       default:
-        console.log('First argument must be a number between 1 and 4.');
+        console.error('First argument must be a number between 1 and 4.');
         return value;
       break;
     }

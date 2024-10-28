@@ -56,22 +56,7 @@ export class HomeComponent {
       categoriesFilter: this.categoriesFilter
     });
 
-    // this.translate.setDefaultLang('en');
-
-    this.loadPosts()
-    .then(() => {
-      const tmpCategories: CategoryDTO[][] = [...this.posts.map(post => post.categories)];
-      let allCategoriesUID: string[] = [];
-     
-      tmpCategories.forEach((array: CategoryDTO[]) => {
-        array.forEach((category: CategoryDTO) => {
-          if (!allCategoriesUID.includes(category.categoryId)) {
-            this.allCategories.push(category);
-            allCategoriesUID.push(category.categoryId);
-          }
-        })
-      })
-    });
+    this.loadPosts();
   }
 
   ngOnInit(): void {
@@ -84,34 +69,27 @@ export class HomeComponent {
     );
   }
 
-  // switchLanguage(language: string): void {
-  //   this.translate.use(language);
-  // }
+
   async like(postId: string): Promise<void> {
     let errorResponse: any;
-    try {
-      await this.postService.likePost(postId);
-      this.loadPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+    this.postService.likePost(postId).subscribe({
+      complete: () => {
+        this.loadPosts();
+      }
+    });
   }
 
   async dislike(postId: string): Promise<void> {
     let errorResponse: any;
-    try {
-      await this.postService.dislikePost(postId);
-      this.loadPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+
+    this.postService.dislikePost(postId).subscribe({
+      complete: () => {
+        this.loadPosts();
+      }
+    });
   }
 
   async applyFilters(): Promise<void> {
-    await this.loadPosts();
-    
     const filters = [
       { filter: this.titleFilter.value, method: () => this.titleFilterMethod() },
       { filter: this.descriptionFilter.value, method: () => this.descriptionFilterMethod() },
@@ -119,7 +97,7 @@ export class HomeComponent {
       { filter: this.aliasFilter.value, method: () => this.aliasFilterMethod() },
       { filter: this.categoriesFilter.value, method: () => this.categoriesFilterMethod() },
     ];
-  
+
     filters.forEach(({ filter, method }) => {
       if (filter) {
         method();
@@ -149,13 +127,10 @@ export class HomeComponent {
       }
 
       stringDate += (postDate.getMonth() + 1) + '-' + postDate.getDate();
-      
+
       if (stringDate === this.publicationDateFilter.value) {
         tmpPosts.push(post);
       }
-
-      console.log(stringDate);
-      console.log(this.publicationDateFilter.value);
 
       if (index === this.posts.length - 1) {
         this.posts = tmpPosts;
@@ -169,9 +144,6 @@ export class HomeComponent {
 
   private categoriesFilterMethod(): void {
     let tmpPosts: PostDTO[] = [];
-    // const allCategoriesUID: string[] = this.allCategories.map((category) => category.categoryId);
-
-    console.log(this.categoriesFilter.value)
 
     this.posts.forEach((post: PostDTO, index: number) => {
       let postCategoriesUID: string[] = post.categories.map((category: CategoryDTO) => category.categoryId);
@@ -196,12 +168,23 @@ export class HomeComponent {
       this.showButtons = true;
     }
 
-    try {
-      this.posts = await this.postService.getPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
-  }
+    this.postService.getPosts().subscribe({
+      next: (postResult) => {
+        this.posts = postResult;
+      },
+      complete: () => {
+        const tmpCategories: CategoryDTO[][] = [...this.posts.map(post => post.categories)];
+        let allCategoriesUID: string[] = [];
 
+        tmpCategories.forEach((array: CategoryDTO[]) => {
+          array.forEach((category: CategoryDTO) => {
+            if (!allCategoriesUID.includes(category.categoryId)) {
+              this.allCategories.push(category);
+              allCategoriesUID.push(category.categoryId);
+            }
+          })
+        })
+      }
+    });
+  }
 }

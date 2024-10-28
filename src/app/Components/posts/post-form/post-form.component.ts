@@ -106,31 +106,24 @@ export class PostFormComponent implements OnInit {
     // update
     if (this.postId) {
       this.isUpdateMode = true;
-      try {
-        this.post = await this.postService.getPostById(
-          this.postId
-        );
+      this.postService.getPostById(this.postId).subscribe({
+        next: (postResult) => {
+          this.post = postResult;
+        },
+        complete: () => {
+          this.title.setValue(this.post.title);
+          this.description.setValue(this.post.description);
+          this.publication_date.setValue(formatDate(this.post.publication_date, 'yyyy-MM-dd', 'en'));
+          this.categories.setValue(this.post.categories.map((category: CategoryDTO) => category.categoryId));
 
-        //console.log(this.post);
-
-        this.title.setValue(this.post.title);
-
-        this.description.setValue(this.post.description);
-
-        this.publication_date.setValue(formatDate(this.post.publication_date, 'yyyy-MM-dd', 'en'));
-
-        this.categories.setValue(this.post.categories.map((category: CategoryDTO) => category.categoryId));
-
-        this.postForm = this.formBuilder.group({
-          title: this.title,
-          description: this.description,
-          publication_date: this.publication_date,
-          categories: this.categories
-        });
-      } catch (error: any) {
-        errorResponse = error.error;
-        this.sharedService.errorLog(errorResponse);
-      }
+          this.postForm = this.formBuilder.group({
+            title: this.title,
+            description: this.description,
+            publication_date: this.publication_date,
+            categories: this.categories
+          });
+        }
+      });
     }
   }
 
@@ -165,28 +158,25 @@ export class PostFormComponent implements OnInit {
       const userId = this.localStorageService.get('user_id');
       if (userId) {
         this.post.userId = userId;
-        try {
-          await this.postService.updatePost(
-            this.postId,
-            this.post
-          );
-          responseOK = true;
-        } catch (error: any) {
-          errorResponse = error.error;
-          this.sharedService.errorLog(errorResponse);
-        }
 
-        await this.sharedService.managementToast(
-          'postFeedback',
-          responseOK,
-          errorResponse
-        );
+        this.postService.updatePost(this.postId, this.post).subscribe({
+          complete: () => {
+              responseOK = true;
 
-        if (responseOK) {
-          this.router.navigateByUrl('posts');
-        }
+              this.sharedService.managementToast(
+                'postFeedback',
+                responseOK,
+                errorResponse
+              ).then(() => {
+                if (responseOK) {
+                  this.router.navigateByUrl('posts');
+                }
+              })
+          },
+        });
       }
     }
+
     return responseOK;
   }
 
@@ -196,23 +186,22 @@ export class PostFormComponent implements OnInit {
     const userId = this.localStorageService.get('user_id');
     if (userId) {
       this.post.userId = userId;
-      try {
-        await this.postService.createPost(this.post);
-        responseOK = true;
-      } catch (error: any) {
-        errorResponse = error.error;
-        this.sharedService.errorLog(errorResponse);
-      }
 
-      await this.sharedService.managementToast(
-        'postFeedback',
-        responseOK,
-        errorResponse
-      );
+      this.postService.createPost(this.post).subscribe({
+        complete: () => {
+          responseOK = true;
 
-      if (responseOK) {
-        this.router.navigateByUrl('posts');
-      }
+          this.sharedService.managementToast(
+            'postFeedback',
+            responseOK,
+            errorResponse
+          ).then(() => {
+            if (responseOK) {
+              this.router.navigateByUrl('posts');
+            }
+          })
+        }
+      });
     }
 
     return responseOK;
@@ -231,8 +220,6 @@ export class PostFormComponent implements OnInit {
     this.post.description = this.postForm.value.description;
     this.post.publication_date = this.postForm.value.publication_date;
     this.post.categories = this.postForm.value.categories;
-
-    console.log(this.postForm.value.categories);
 
     if (this.isUpdateMode) {
       this.validRequest = await this.editPost();

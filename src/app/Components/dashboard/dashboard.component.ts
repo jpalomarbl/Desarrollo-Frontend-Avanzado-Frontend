@@ -29,10 +29,10 @@ export class DashboardComponent {
     this.total_likes = 0;
     this.total_dislikes = 0;
 
-    this.posts = []; 
+    this.posts = [];
   }
 
-  async ngOnInit(): Promise<void> {    
+  async ngOnInit(): Promise<void> {
     this.loadPosts()
     .then(() => {
       this.calculate();
@@ -48,12 +48,11 @@ export class DashboardComponent {
     // TODO 2
     let errorResponse: any;
 
-    try {
-      this.posts = await this.postService.getPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+    this.postService.getPosts().subscribe({
+      next: (postResult) => {
+        this.posts = postResult;
+      }
+    });
   }
 
   private sum_likes(): number {
